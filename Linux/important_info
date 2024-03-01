@@ -1,0 +1,139 @@
+Order of Operations
+1. Access Vetting
+- Is it safe for us to be here
+2. Vetting complete - all clear
+3. Survey (if required)
+- Series of commands used to further enumerate a device.
+4. Collection (if required)
+- Grabbing files through ‘scp’ 90% of the time
+5. Scanning (if required)
+- nmap is gonna be used majority of the time.
+6. Redirection (if required)
+7. Do all these steps on next target
+8. Return from redirected target
+9. Effect (if required)
+10. Exit vetting
+11. Exit vetting complete – Exit
+
+
+SSH For Kali Box
+ssh -MS /tmp/Kali root@10.50.33.32
+pass:kalipassword
+
+
+Process Accounting
+The pacct|psacc will be in /var/*/*acct*/ filepath
+Here's an example of an init script that has pacct enabled:
+# Turn process accounting on.
+
+if [ -x /sbin/accton ]
+
+then
+
+/sbin/accton /var/log/pacct
+
+echo "Process accounting turned on."
+
+fi
+
+
+
+Pre-op Checklist
+    • Review the mission plan
+    • Review relevant guidance (MP, Daily Reads, Confluence, NSDB, etc)
+    • Prepare your operational environment
+        ◦ Connect to OpStation
+        ◦ Create STUDENT DIRECTORY: mkdir /<##>_<dd-mm-yy>_<op#>
+        ◦ cd into STUDENT DIRECTORY
+        ◦ Create an opnotes file with: vim notes_<dd-mm-yy>
+        ◦ Create a NSDB file with: vim NSDB_<dd-mm-yy>
+        ◦ Script all target terminal windows with: script -af termscreen.$$
+    • Note: opnotes and NSDB are not on target. Do NOT script them!
+    • Condct pre-brief/IP verification with MC
+
+
+Post-op Checklist
+    • DEBRIEF submitted to MC
+    • Archive your op station
+        ◦ All files collected, edited, used by student must be located in
+          STUDENT DIRECTORY
+        ◦ Save and Close NSDB and opnotes files: <esc>: wq!<enter>
+        ◦ cd out of the STUDENT DIRECTORY: cd ..
+        ◦ Exit terminal scripts by running “exit”
+        ◦ Zip everything up: tar -cvf <studentdir>.tar <studentdir>
+        ◦ Push tar to server: scp <studentdir>.tar student#@10.50.23.64:~
+        ◦ Password: password# (no leading zeros for student# or password#)
+    • Confirm tarball submission and await feedback
+
+
+Enumeration 
+-Hostname
+-OS
+-local time/Zulu time
+-all network interfaces
+-listening ports
+-non-system processes
+-services
+-partitions
+-resource usage (memory, CPU, and storage space) of particular interest
+-record all user accounts for use in follow-on operations
+
+
+Logging
+    1. Confirm your mission’s log cleaning policy
+    2. Identify all of your logs*
+       
+    3. Disable logging as needed
+    4. Identify a unique string or strings that identify all of your logs and only your logs
+    5. Confirm Actions with Senior
+    6. grep out the log, using -v to remove entries with your unique strings to a temporary file
+       in /tmp
+    7. Verify all offending logs have been removed
+    8. Cat out the contents of your clean log file onto the original log file
+    9. Use ‘touch’ command to update the timestamp to the most recent log entry
+    10. Delete /tmp/ log file
+
+Restart logging
+Mandatory Vetting Commands
+
+
+
+Linux
+Upon Connection:
+    • ls -latr /
+    • ls -latr /tmp
+    • ls -latr .
+    • ls -latr ..
+    • ls -latr /root
+    • ps -elf
+    • ifconfig -a OR ip addr
+    • netstat -auntp OR ss -auntp
+    • w
+    • ls -latr /var/spool/cron
+    • tail -n 1000 <files in /var/spool/cron/>
+    • date; date -u
+    • uname -a
+    • df
+    • ls -latr /var/*/*acc*
+    • ls -latr /var/*log*/
+    • ls -latr /var/log/*
+    • cat out relevant files (grep for your logged in user account)
+    • ls -la /etc/*syslog* read all the config files
+    • for user in $(cut -f1 -d: /etc/passwd); do echo "###### $user crontab is:"; cat /var/spool/cron/{crontabs/$user,$user} 2>/dev/null; done
+    • cat /etc/crontab
+    • ls -la /etc/cron.*
+    • As needed, examine the files/scripts shown in the directory listing of the cron.* directories
+    • find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -<duration in minutes since initial connection> -type f -print0 | xargs -0 ls -latr (NOTE there is a "-" a.k.a minus symbol preceding the "<duration in minutes since initial connection">
+    • sestatus OR getenforce
+    • cat /root/.bash_history
+    • cat ~/.bash_history
+
+
+Before Disconnect:
+    • w
+    • ls -latr /tmp
+    • ps -elf
+    • netstat -lptn
+    • ls -latr /var/log
+    • find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -<yourminutesontarget> -type f -print0 | xargs -0 ls -latr
+      
