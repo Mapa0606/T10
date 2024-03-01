@@ -1,0 +1,9 @@
+Scanning
+
+nmap
+
+
+proxychains NMAP
+
+proxychains nmap -Pn -n -vvv -T3 -sT -p T:22,111,22022,80,443,445,3389 <remote_ip>
+
