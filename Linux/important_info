@@ -16,6 +16,21 @@ Order of Operations
 11. Exit vetting complete – Exit
 
 
+
+Security Product Report
+    • Name and version of the product
+    • Primary configuration directory
+    • Installation folder
+    • Directory location of associated logs
+    • Timestamp of all associated log files
+    • Cloud based?; yes or no
+    • Can we read the logs?; yes or no
+        ◦ If Yes, put the most recent 5 lines of logs in your NSDB File
+        ◦ If No, why?
+    • Recommendation - Do we need to be concerned or adjust our plans?
+
+
+
 SSH For Kali Box
 ssh -MS /tmp/Kali root@10.50.33.32
 pass:kalipassword
