@@ -1,0 +1,15 @@
+Collection
+
+scp {source} {Destination}
+Upload:
+scp [/path/to/local/]<file> <user>@<remote_IP>:~/.
+Download
+scp <user>@<remote_ip>:[/path/to/remote]<file> [/path/to/local/file]
+
+
+
+ssh-cat
+Download
+ssh <user>@<Remote_IP> "cat <file>" > <file>
+Upload
+ssh <user>@<Remote_IP> "cat > <file>" < <file>
