@@ -1,0 +1,130 @@
+GAINING ACCESS
+
+Types of Targets
+
+    • Ops Station
+        ◦ We own it; fully trusted - no vetting required
+        ◦ Where you should be running all commands from
+    • Listening Post (LP)
+        ◦ Treated as an extension of your Ops Station but on the open web, so vet first
+        ◦ Connection and scanning commands may be run from here if required
+    • Redirector/External Router
+        ◦ Touches open internet. May be first step into a target network
+        ◦ May be dual-homed or NAT’ed/PAT’ed
+    • Internal Device
+        ◦ Regardless of IP address, these are hosts that are internal to the network
+      
+
+SSH
+
+Basic SSH command: 
+ssh -p 2022 root@10.20.30.40
+    • Port - The specific port listening for an ssh connection. Here, ssh is listening on port 2022
+    • Username - What user do you intend to authenticate as when you land on target?
+    • IP - Where are we sending our connection request to right now?
+
+Multiplexing
+Basic multiplexed SSH command: 
+ssh -M -S /tmp/T1 -p 2022 root@10.20.30.40
+
+    1. Calls ssh command binary to execute on the current host
+    2. Multiplex Information - -M makes a new socket and -S saves the socket information for future use. 
+Present Connection - Where we are pointing our connection attempt right now
+    1. Port - The specific port listening for an ssh connection. Here, ssh is listening on port 2022
+    2. Username - What user do you intend to authenticate as when you land on target?
+    3. IP - Where are we sending our connection request to right now?
+Establish Secondary windows by running ssh -S /tmp/T1 -p 2022 root@192.168.0.1
+Note: If you include the -M on your secondary, you will overwrite your original socket.
+
+Tunneling
+-L 127.0.0.1:2222:192.168.0.2:2202
+    1. The “direction” or “listening” end of the tunnel, -L or -R, indicating whether the packet initiating the connection will be received on your (L)ocal host or the (R)emote target you are connecting to.
+    2. The IP of the listening host (LOCAL IP)
+    3. The open listening port on the listening host where you expect a connection. (LOCAL PORT)
+    4. The receiving IP or the IP of the remote host you want the connection packet to reach once it exits its ssh tunnel. (NEXT TARGET IP)
+    5. The receiving port. (NEXT TARGET PORT)
+
+CREATING A MULTIPLEXING TUNNEL SYNTAX
+ssh -S /tmp/T1 dummy -O forward -L 127.0.0.1:2222:192.168.0.2:2202
+
+    1. Calls ssh command binary to execute on the current host
+    2. Multiplex Information - Define the connection information from our -S saved socket. 
+
+Present Connection
+    1. Connection Information - because we are using the existing session context stored in /tmp/T1 we don’t need to restate that information here. However, ssh requires we put SOMETHING here, so we’ll put ‘dummy’ so if something goes wrong, it’s unable to actually connect to anything.
+
+Next Connection 
+    1. Options - What options do we want to modify about our existing ssh session. In this case, we want to add forwarding.
+    2. Tunnel Syntax - My tunnel information to connect me to the next target. Includes direction (-L), tunnel entrance IP (127.0.0.1), tunnel entrance port (2222), next hop IP (192.168.0.2), and next hop port (22).
+CONNECTING TO MULTIPLEXING TUNNEL SYNTAX
+ssh -M -S /tmp/T2 -p 2222 student@127.0.0.1
+
+    1. Calls ssh command binary to execute on the current host
+    2. Multiplex Information - -M makes a new socket and -S saves the socket. We renamed this one T2 because we are creating a new socket and want it to be something easy to identify.
+Present Connection - Where we are pointing our connection attempt right now
+    1. Port - The specific port listening for an ssh connection. When we connected to T1, we set our T2 port to 2222, so that is the port we will point our connection request at.
+    2. Username - What user do you intend to authenticate as when you land on target? We want to be “student” when we access T2.
+    3. IP - Where are we sending our connection request to right now? This is a (L)ocal tunnel, so we need to send it to our local loopback, which we established when we set up the tunnel.
+
+TUNNELING THROUGH A MULTIPLEX TUNNEL
+ssh -S /tmp/T2 -dummy -O forward -L3333:192.168.0.3:2203 -L4444:192.168.0.4:2204
+
+    1. Calls ssh command binary to execute on the current host
+    2. Multiplex Information - Using session information we -S saved earlier in the socket. 
+Present Connection - Where we are pointing our connection attempt right now
+    1. Connection Information - Where are we sending our connection request to right now? Remember, because our session context is stored in /tmp/T2, we can put anything here, just so long as we have something here.
+Future Connection - Where are we going from here?
+    1. Session Options - Adding forwarding to the session
+    2. Tunnel syntax -  My tunnel information to connect me to the next target. Includes direction, tunnel entrance IP, tunnel entrance port, next hop IP, and next hop port.
+    3. We can establish as many tunnels here as we could ever possibly need. The default listening/entrance IP for a -L tunnel is 127.0.0.1 so we can leave it off without issue.
+
+I can get to T3 with this:
+ssh -M -S /tmp/T3 -p 3333 student@127.0.0.1
+
+And T4 with this:
+ssh -M -S /tmp/T4 -p 4444 student@127.0.0.1
+
+REVERSE TUNNELING
+SSH command: 
+ssh -S /tmp/T4 -p 4444 student@127.0.0.1 -O forward -R192.168.0.4:12345:127.0.0.1:5555
+    1. Calls ssh command binary to execute on the current host
+    2. Multiplex Information - -S accesses the stored socket when we connected to T4. 
+Present Connection 
+    1. Port - The specific port listening for an ssh connection. 
+    2. Username - What user do you intend to authenticate as when you land on target? 
+    3. IP - Where are we sending our connection request to right now? 
+Future Connection
+    1. Session Options - Adding forwarding to the session
+    2. Tunnel syntax -  My tunnel information to connect me to the next target. Includes direction, tunnel entrance IP, tunnel entrance port, next hop IP, and next hop port. The default IP for a -R tunnel’s entrance is 0.0.0.0 or all interfaces on that target.
+       
+       MODIFYING EXISTING TUNNELS
+       
+ssh -S /tmp/T4 dummy -O cancel -R12345:127.0.0.1:5555
+ssh -S /tmp/T2 dummy -O cancel -L3333:192.168.0.3:2203
+ssh -S /tmp/T4 dummy -O forward -L3333:192.168.0.6:2206
+    1. Calls ssh command binary to execute on the current host
+    2. Multiplex Information - We want to modify the tunnel information on these sockets. 
+Present Connection
+    1. Username 
+Future Connection 
+    1. Options: start with -O and either “cancel” to close or “forward” to open a tunnel
+    2. Tunnel syntax -  What tunnel do we want to create or remove?
+
+NETCAT
+nc will accept connections at a given port (-p) and act as a server when you execute it with the -l (listen) option:
+nc -l -p 1234
+In another terminal window, connect a client to the server with nc:
+nc 127.0.01 1234
+You can now send messages between the two machines with nc.
+
+
+ssh-cat
+Download
+ssh <user>@<Remote_IP> "cat <file>" > <file>
+Upload
+ssh <user>@<Remote_IP> "cat > <file>" < <file>
+
+Scanning
+proxychains NMAP
+
+proxychains nmap -Pn -n -vvv -T3 -sT -p T:22,111,22022,80,443,445,3389 <remote_ip>
