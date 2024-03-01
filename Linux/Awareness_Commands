@@ -1,0 +1,54 @@
+Awareness Commands Linux
+Date and Time
+    • date [OPTION]... [+FORMAT]
+    • date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
+CPU/ Memory Usage 
+    • To check the statistics on the cpu/processor:
+        ◦ dmidecode [OPTIONS]
+    • To check CPU/memory usage on a Linux system, use the top or free command:
+        ◦ free [OPTIONS]
+        ◦ top [-b] [-nCOUNT] [-dSECONDS] [-m]
+            ▪ Note: Using the top command will ‘take-over’ your terminal
+Disk Usage
+    • fdisk
+        ◦ Partition table manipulator for Linux
+    • du
+        ◦ Estimate file space usage
+    • df
+        ◦ Display free disk space
+    • quota
+        ◦ Display disk usage and limits
+    • mount
+        ◦ Mount a file system
+    • lspci
+        ◦ List all PCI devices
+    • lsblk
+        ◦ List block devices
+    • lsusb
+        ◦ List all USB devices
+Processor Architecture
+    • lscpu ← This one is goated
+    • uname -a
+Machine ID
+    • ifconfig - displays the status of the currently active interfaces
+        ◦ useful command-line options: -a
+    • ip - protocol (IP or IPv6) address on a device
+        ◦ useful command-line options: address, neighbor, route, tunnel
+    • hostname - display the system's DNS name; display/set its hostname or NIS domain name
+        ◦ useful command-line options: -A
+    • uname - print certain system information
+        ◦ useful command-line options: -a, -r, -v, -m, -i, -o
+    • cat /etc/*rel*
+Process 
+    • ps -elf
+Open Ports/Connections
+    • netstat [-ral] [-tuwx] [-enWp] <--- Most ‘Nix varieties
+    • ss [OPTIONS] [FILTER] <--- too many options to list here
+Jobs
+    • crontab [ -u user ] [ -i ] {-e | -l | -r }
+        ◦ DO NOT JUST USE ‘CRONTAB’. IT ERASES LISTINGS 
+
+Modifying Timestamps
+    • touch -r
+
+USE ‘W’ TO SEE CURRENTLY LOGGED IN USERS ON ENTRY AND EXIT. ALERT MC FOR LOGGED IN ROOT USER
