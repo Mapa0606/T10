@@ -1,0 +1,214 @@
+##LINVET Linux
+-------------------------------------------------------------------------------------------------------------
+
+ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@10.50.35.49
+ssh -s  /tmp/T1 -O forward -L127..0.0.1:37954:192.168.0.10:22 dummy 
+
+IpTables
+-------------------------------------------------------------------------------------------------------------
+lsmod
+sudo iptables -L
+sudo iptables -t nat -nvL
+sudo iptables -t nat -A PREROUTING -p tcp --dport <RHP> -j DNAT --to-destination <IP1>:<SSHPORT>
+sudo iptables -t nat -A POSTROUTING -p tcp -d <IP1> <RHP> -j SNAT --to-source <IP2>
+
+iptables -t nat -A POSTROUTING -p tcp  -j MASQUERADE (SLEDGEHAMMER)
+iptables -t nat -A POSTROUTING -p tcp --dport 22 -j SNAT --to-source 192.168.99.254 (SCALPEL)
+
+To check the status:
+sysctl net.ipv4.ip_forward
+cat /proc/sys/net/ipv4/ip_forward
+To enable:
+sysctl -w net.ipv4.ip_forward=1
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+
+
+------------------------------------------------------------------------------------------------------------
+uname -a;id;w
+date;date -u
+pwd
+ls -latr
+ls -latr ..
+ls -latr /
+#ls -alR /
+ls -latr /tmp
+ls -latr /root
+sudo ls -latr ~/.bash_history
+#sudo cat /root/.bash_history
+#sudo cat ~/.bash_history
+*ls -latr /dev/shm
+ls -latr /var/spool/cron
+ls -latr /var/*acc*
+ls -latr /var/*log*/
+sudo ls -latr /var/log/*
+#cat /var/log/* | grep [logged in user account]
+*ls -latr /var/log/audit/audit.log
+#read all the config files
+ls -la /etc/*syslog*
+cat /etc/shadow
+cat /etc/passwd
+cut -f1 -d: /etc/passwd
+for user in $(cut -f1 -d: /etc/passwd); do echo "###### $user crontab is:"; cat /var/spool/cron/{crontabs/$user,$user} 2>/dev/null; done
+
+cat /etc/crontab
+ls -latr /var/spool/cron
+#tail -n 1000 [files in /var/spool/cron/]
+ls -la /etc/cron.*
+#As needed, examine the files/scripts shown in the directory listing of the cron.* directories
+
+mount
+#mount | column -t
+df -h
+
+
+
+ifconfig -a; ip addr
+ps -elf
+netstat -auntp
+
+
+sestatus OR getenforce
+
+
+ls -latr /etc/*release*
+cat /etc/*release*
+cat /proc/cpuinfo
+#(depending on systemd vs not systemd)
+services --status-all || systemctl status --no-pager
+
+#/var/log/messages can log a find, usually from automount calls
+find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 since initial connection> -type f -print0 | xargs -0 ls -latr (NOTE there is a "-" a.k.a minus symbol preceding the "<duration since initial connection>"
+#depending on permissions, running find can be nasty
+#find / -mmin -<TIME> 2>&1|egrep -v "^/proc/"|egrep -v "^/sys/"
+
+
+#LINFO Linux Info Gathering
+------------------------------------
+#mount
+lsmod
+#uname -a
+#ls -latr /etc/*release*
+#cat /etc/*release*
+cat /proc/cpuinfo
+#services --status-all || systemctl status --no-pager (depending on systemd vs not systemd)
+cat /proc/meminfo
+#cat /etc/shadow
+#cat /etc/passwd
+lspci -vv
+arp -a
+lsusb
+lsblk
+fdisk -l
+free -m
+dmidecode -t bios
+#ls -alR / (make sure scrollback limit is set to MAX on terminal)
+
+
+
+
+
+#LINEXIT Linux Exit Survey
+-----------------------------------
+ls -latr /tmp
+ps -elf
+netstat -lptn
+ls -latr /var/log
+w
+
+#/var/log/messages can log a find, usually from automount calls
+find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -&lt;yourminutesontarget&gt; -
+#depending on permissions, running find can be nasty
+#find / -mmin -<TIME> 2>&1|egrep -v "^/proc/"|egrep -v "^/sys/"
+type f -print0 | xargs -0 ls -latr
+
+
+
+
+sudo less /etc/rsyslog.d/00-my_iptables.conf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#WINVET Windows Survey Commands
+-------------------------------------------
+date /t
+time /t
+tasklist /V
+auditpol /get /category:*
+ipconfig /all
+netstat /anob
+netsh advfirewall show allprofiles
+net share
+reg query hklm\software\microsoft\windows\currentversion\run
+reg query hklm\software\microsoft\windows\currentversion\runonce
+reg query hklm\software
+at
+schtasks /query /v
+dir /o:d /t:w c:\
+dir /o:d /t:w c:\windows\temp
+dir /o:d /t:w c:\windows\
+dir /o:d /t:w c:\windows\system32
+dir /o:d /t:w c:\windows\system32\winevt\logs
+dir /o:d /t:w &quot;%appdata%\microsoft\windows\start menu\programs\startup&quot;
+wevtutil qe security /c:25 /rd:true /f:text (whatever has updated from previous dir)
+
+
+
+#WINEXIT Windows Exit Commands
+-------------------------------------------
+dir /o:d /t:w c:\windows\temp
+dir /o:d /t:w c:\windows\system32\winevt\logs
+wevtutil qe security /c:25 /rd:true /f:text (whatever has updated from previous dir)
+netstat /anob
+tasklist
+
+
+
+
+
+
+
+#WINFO Windows Info Commands
+---------------------------------------
+systeminfo
+net user
+net localgroup
+net session
+net start
+type %systemroot%\system32\drivers\etc\hosts
+arp -a
+route print
+driverquery /v
+wmic baseboard get Manufacturer, Model, PRoduct, SerialNumber, Version
+wmic cpu get deviceID, Addresswidth, MaxClockSpeed, Name, Manufacturer
+wmic logicaldisk get name, freespace, systemname, filesystem, size, volumeserialnumber
+wmic path Win32_VideoController get caption, CurrentHorizontalResolution, CurrentVerticalResolution, Description, DriverVersion, AdapterRAM /format:list
+wmic printer list full
+wmic path win32_pnpentity where "ConfigManagerErrorCode<>0" get Name, PNPDeviceID
+wmic qfe list full
+wmic service list full
+wmic product get Caption, InstallDate, Vendor
+
+
+
+
