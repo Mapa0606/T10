@@ -1,4 +1,19 @@
-##LINVET Linux
+Enumeration
+-------------------------------------------------------------------------------------------------------------
+Hostname
+OS
+local time/Zulu time
+all network interfaces
+listening ports
+non-system processes
+services
+partitions
+resource usage (memory, CPU, and storage space) of particular interest
+record all user accounts for use in follow-on operations
+
+
+
+SSH
 -------------------------------------------------------------------------------------------------------------
 
 ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@10.50.35.49
@@ -15,7 +30,7 @@ sudo iptables -t nat -A POSTROUTING -p tcp -d <IP1> <RHP> -j SNAT --to-source <I
 iptables -t nat -A POSTROUTING -p tcp  -j MASQUERADE (SLEDGEHAMMER)
 iptables -t nat -A POSTROUTING -p tcp --dport 22 -j SNAT --to-source 192.168.99.254 (SCALPEL)
 
-To check the status:
+To check the status of a Router:
 sysctl net.ipv4.ip_forward
 cat /proc/sys/net/ipv4/ip_forward
 To enable:
@@ -23,17 +38,17 @@ sysctl -w net.ipv4.ip_forward=1
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
 
-
+##LINVET Linux
 ------------------------------------------------------------------------------------------------------------
-uname -a;id;w
+w
+uname -a;id
 date;date -u
 pwd
 ls -latr
 ls -latr ..
 ls -latr /
-#ls -alR /
-ls -latr /tmp
-ls -latr /root
+sudo ls -latr /tmp
+sudo ls -latr /root
 sudo ls -latr ~/.bash_history
 #sudo cat /root/.bash_history
 #sudo cat ~/.bash_history
