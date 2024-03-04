@@ -1,0 +1,166 @@
+DATE AND TIME
+Examples:
+date /t
+time /t
+
+*DO NOT RUN DATE OR TIME BY ITSELF*
+
+CMD> systeminfo
+-Device name
+-OS version
+-CPU and architecture
+-System uptime
+-Installed RAM and usage
+-NIC information
+To check the load on the cpu/processor:
+CMD> wmic cpu get loadpercentage
+
+To check disk information on a Windows system:
+wmic logicaldisk get name (displays local drives)
+
+To display available space:
+dir c:\
+
+ipconfig /all
+- displays the status of the currently active interfaces
+hostname 
+- display the system's hostname, not the domain name
+echo %userdomain% 
+- displays the current domain name
+
+tasklist
+- To see a list of running processes
+
+
+Netstat [options]
+/a - Displays all active TCP connections and the TCP and UDP ports on
+which the computer is listening
+/b - Displays the executable involved in creating each connection or listening
+port. (requires elevated permissions)
+/n - Displays active TCP connections, however, addresses and port numbers
+are expressed numerically and no attempt is made to determine names.
+/o - Displays active TCP connections and includes the process ID (PID) for
+each connection.
+
+
+dir <file>List information about file(s)
+
+dir
+Briefly list directory contents
+cd
+Change Directory
+type
+Concatenate and print (display) the content of files
+more
+Display output one screen at a time
+strings
+Output the strings of printable characters in a file (if installed)
+findstr
+Search file(s) for lines that match a given pattern
+
+
+
+Task Scheduler
+Scheduled tasks, similar in function to cronjobs in linux,
+are stored in the %WINDIR%\System32\Tasks directory.
+View the scheduled tasks:
+schtasks /Query
+
+NET Commands
+net share
+create, remove, and otherwise manage shared resources on the computer (share your files)
+net use
+show the shared drives you've mapped to as well as allow you to manage those mapped drives (use shared files)
+net session
+list or disconnect sessions between the computer and others on the network
+net pause
+puts on hold a Windows resource or service
+net continu
+restart a service that was put on hold by ‘net pause’
+net stop
+stops a Windows resource or service
+net start
+start a network service or list running network services
+NET Commands
+net accounts
+set password and logon requirements for users
+net computer
+add or remove a computer from a domain
+net config
+show information about the configuration of the Server or Workstation service
+net file
+show a list of open files on a server
+net group
+used to add, delete, and manage global groups on servers
+net localgroup
+used to add, delete, and manage local groups on computers
+NET Commands
+net statistics
+show the network statistics log for the Server or Workstation service
+net time
+display the current time and date of another computer on the network
+net user
+used to add, delete, and otherwise manage the users on a computer
+net view
+list of computers and network devices on the network
+net name (removed after XP)
+used to add or delete a messaging alias at a computer
+net print (removed after Vista)
+display and manage network print jobs
+net send (removed after XP)
+send messages to other users, computers, or net name
+
+Registry Commands
+reg query
+Queries a specified registry key/subkey
+reg compare
+Compares specified registry keys/subkeys
+reg add
+Adds a new subkey to a specified registry location
+reg delete
+Deletes a specified registry subkey
+reg copy
+Copies a registry subkey to a specified location on a local or remote machine
+reg export
+Exports keys/subkeys from the registry to a file
+reg import
+Imports keys/subkeys from a file back into the registry
+
+
+Additional CMD commands
+doskey <--- Reportable Event
+Create Linux style aliases (super helpful)
+wevtutil
+Provides information about Windows events, can query, export, and clear logs
+schtasks
+Adds/deletes/queries scheduled tasks
+arp
+Lists or modifies arp cache entries
+tracert
+Sends ICMP echo request to specified location and maps out path taken (near/side router
+interface replies to sender)
+dir /b/s *.txt
+Search all text files in directory tree
+
+Send anything to a file and search the file!
+Dir /b/s *.exe >> c:\filelist.txt
+Type filelist.txt | find /i “whatever you're searching for”
+
+route
+Used to view and/or manipulate IP routing table
+driverquery
+Lists all device (hardware) drivers installed
+tree
+Displays a specified drive or directory and all its subdirectories and files in a tree like format
+netsh advfirewall show allprofiles
+Shows the status of all Windows firewall profiles (Domain, Private, Public)
+auditpol /get /category:*
+Queries all audit categories
+
+
+
+
+
+
+
+
