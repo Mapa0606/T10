@@ -169,6 +169,14 @@ sudo less /etc/rsyslog.d/00-my_iptables.conf
 date /t
 time /t
 tasklist /V
+
+#For suspicious process'# 
+wmic process get processid,parentprocessid,executablepath | findstr SkypeHelper.exe
+
+#To hash a file on windows#
+certutil -hashfile "c:\example\test_file.txt" SHA256
+
+
 auditpol /get /category:*
 ipconfig /all
 netstat /anob
