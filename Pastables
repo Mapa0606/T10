@@ -99,7 +99,7 @@ find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 since initial 
 
 
 #LINFO Linux Info Gathering
-------------------------------------
+------------------------------------------------------------------------------------------------------------------
 #mount
 lsmod
 #uname -a
@@ -124,7 +124,7 @@ dmidecode -t bios
 
 
 #LINEXIT Linux Exit Survey
------------------------------------
+------------------------------------------------------------------------------------------------------------------
 ls -latr /tmp
 ps -elf
 netstat -lptn
@@ -165,7 +165,7 @@ sudo less /etc/rsyslog.d/00-my_iptables.conf
 
 
 #WINVET Windows Survey Commands
--------------------------------------------
+------------------------------------------------------------------------------------------------------------------
 date /t
 time /t
 tasklist /V
@@ -179,7 +179,7 @@ certutil -hashfile "c:\example\test_file.txt" SHA256
 
 auditpol /get /category:*
 ipconfig /all
-netstat /anob
+netstat /anob #Views SSH Connections# 
 netsh advfirewall show allprofiles
 net share
 reg query hklm\software\microsoft\windows\currentversion\run
@@ -198,7 +198,7 @@ wevtutil qe security /c:25 /rd:true /f:text (whatever has updated from previous 
 
 
 #WINEXIT Windows Exit Commands
--------------------------------------------
+------------------------------------------------------------------------------------------------------------------
 dir /o:d /t:w c:\windows\temp
 dir /o:d /t:w c:\windows\system32\winevt\logs
 wevtutil qe security /c:25 /rd:true /f:text (whatever has updated from previous dir)
@@ -206,13 +206,21 @@ netstat /anob
 tasklist
 
 
-
-
+Win Privileged User Reportable Items
+------------------------------------------------------------------------------------------------------------------
+Target - Where did you see this user?
+User - What is their username?
+Access time - How long have they been on?
+Access method - Did they access locally? Remotely?
+Provide all relevant details
+Privileges - What are they capable of doing?
+Activity - What are they currently doing?
+Recommendation - Do we need to be concerned? Do we need to adjust our plans?
 
 
 
 #WINFO Windows Info Commands
----------------------------------------
+------------------------------------------------------------------------------------------------------------------
 systeminfo
 net user
 net localgroup
@@ -233,5 +241,17 @@ wmic service list full
 wmic product get Caption, InstallDate, Vendor
 
 
+#Service Information Using wmic
+------------------------------------------------------------------------------------------------------------------
+Name and account for all services:
+wmic service get name,startname
 
+started services only:
+wmic service where started=true get  name, startname
+
+services with specific pattern in name:
+wmic service where 'name like "%sql%"' get  name, startname
+
+nicely formatted as html table (and then opened in your browser):
+(wmic service where 'name like "%sql%"' get  name, startname /format:htable >out.html) && out.html
 
