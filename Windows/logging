@@ -31,7 +31,7 @@ Computer: The name of the computer
 Description: Details on users, processes that generated log, data provided by process or software
 
 Syntax for Viewing logs
-----------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
 auditpol:
 Run to view what actions Windows is configured to log
 
@@ -44,9 +44,16 @@ Get-EventLog system -newest 3 | Format-List
 WMIC:
 Sure you can use it, but these are easier
 
-wevtutil qe <LOG> /c:25 /rd:true /f:text
+Abnormal Logging Reportable Items
+------------------------------------------------------------------------------------------------------------------
+Provide process name/options, PID, Parent ID, user
+Provide location of configuration file and it's abnormal or irregular contents
+Provide hostname or IP of where logs are being sent
+Provide any network connections opened/established by abnormal logging
+Provide brief description of the abnormal, irregular or remote logging
+Recommendation - Do we need to be concerned or adjust our plans?
 
-
+*ALL ABNORMAL LOGGING INFORMATION IS REPORTED TO MC AND NSDB*
 
 
 
