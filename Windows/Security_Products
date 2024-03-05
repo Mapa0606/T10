@@ -1,0 +1,29 @@
+Security Products Reportable Items
+---------------------------------------------------------------------------------------------------------------------
+Name and version of the product
+Primary registry key
+Installation folder
+Directory location of associated logs
+Timestamp of all associated log files
+Cloud based?; yes or no
+Can we read the logs?; yes or no
+If Yes, put the most recent 5 lines of logs in your NSDB File
+If No, why?
+Recommendation - Do we need to be concerned or adjust our plans?
+
+MC     NSDB            DESCRIPTION
+X      X               Name and version of the product
+X      X               Primary registry key (Windows) or Configuration location (Linux)
+X      X               Installation folder
+       X               Directory location of associated logs
+       X               Timestamp of all associated log files
+       X               Cloud based?; yes or no
+       X               Can we read the logs?; yes or no (If yes, 5 most recent, if no, why?)
+X      X               Open Source Documentation, if available
+X      X               Recommendation - Do we need to adjust our short or long term plans?
+
+
+
+
+
+
