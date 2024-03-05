@@ -157,7 +157,7 @@ time /t
 tasklist /V
 
 #For suspicious process'# 
-wmic process get processid,parentprocessid,executablepath | findstr SkypeHelper.exe
+wmic process get processid,parentprocessid,executablepath | findstr norton.exe
 
 #To hash a file on windows#
 certutil -hashfile "c:\example\test_file.txt" SHA256
@@ -168,11 +168,11 @@ ipconfig /all
 netstat /anob #Views SSH Connections# 
 netsh advfirewall show allprofiles
 net share
-reg query hklm\software\microsoft\windows\currentversion\run
+reg query hklm\software\microsoft\windows\currentversion\run 
 reg query hklm\software\microsoft\windows\currentversion\runonce
 reg query hklm\software
 at
-schtasks /query /v
+schtasks /query 
 dir /o:d /t:w c:\
 dir /o:d /t:w c:\windows\temp
 dir /o:d /t:w c:\windows\
@@ -235,7 +235,7 @@ wevtutil clear-log <LOG> /backup:backup.evtx
 # clear all logs#
 for /f %x in ('wevtutil el') do wevtutil cl "%x"
 #View Logs#
-wevtutil qe <LOG> /c:25 /rd:true /f:text
+wevtutil qe setup /c:25 /rd:true /f:text | findstr norton.exe
 
 
 #Service Information Using wmic
