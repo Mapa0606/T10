@@ -150,20 +150,6 @@ sudo less /etc/rsyslog.d/00-my_iptables.conf
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #WINVET Windows Survey Commands
 ------------------------------------------------------------------------------------------------------------------
 date /t
@@ -239,6 +225,17 @@ wmic path win32_pnpentity where "ConfigManagerErrorCode<>0" get Name, PNPDeviceI
 wmic qfe list full
 wmic service list full
 wmic product get Caption, InstallDate, Vendor
+
+
+
+#WINLOG Clearing and managing Logging
+------------------------------------------------------------------------------------------------------------------
+#Backup and clear a log simultaniously#
+wevtutil clear-log <LOG> /backup:backup.evtx
+# clear all logs#
+for /f %x in ('wevtutil el') do wevtutil cl "%x"
+#View Logs#
+wevtutil qe <LOG> /c:25 /rd:true /f:text
 
 
 #Service Information Using wmic
