@@ -11,7 +11,21 @@ partitions
 resource usage (memory, CPU, and storage space) of particular interest
 record all user accounts for use in follow-on operations
 
+Collection
+-----------------------------------------------------------------------------------------------------------------
+scscp -P 2222 -r -o ControlPath=/tmp/T2 student15@127.0.0.1:/Windows/Prefetch /student15_05-03-24_HH08/prefetch_collectionp {source} {Destination}
+Upload:
+scp [/path/to/local/]<file> <user>@<remote_IP>:~/.
+Download
+scp <user>@<remote_ip>:[/path/to/remote]<file> [/path/to/local/file]
+^ use -r for copying an entire directory
+scp -P <PORT#> -r -o ControlPath=</tmp/T2> student15@127.0.0.1:<REMOTE FILEPATH> <LOCAL FILEPATH>
 
+ssh-cat
+Download
+ssh <user>@<Remote_IP> "cat <file>" > <file>
+Upload
+ssh <user>@<Remote_IP> "cat > <file>" < <file>
 
 SSH
 -------------------------------------------------------------------------------------------------------------
@@ -207,6 +221,7 @@ Recommendation - Do we need to be concerned? Do we need to adjust our plans?
 
 #WINFO Windows Info Commands
 ------------------------------------------------------------------------------------------------------------------
+query user
 systeminfo
 net user
 net localgroup
