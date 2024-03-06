@@ -17,11 +17,11 @@ password15
 
 
 =========================
-T1: 10.50.27.50
+T1: 10.50.30.49
 =========================
 X-----------------------
 
-ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@10.50.27.50
+ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@10.50.30.49
 
 
 
