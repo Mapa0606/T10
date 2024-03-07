@@ -1,3 +1,20 @@
+Before the Operation
+------------------------------------------------------------------------------------------------------------------
+Below are the requirements of the Operator before conducting an operation. Failure to do so may result in immediate failure.
+
+Review mission plan
+Power on OpStation
+Create STUDENT DIRECTORY: /<student#>_<dd-mm-yy>_<op#>
+cd into STUDENT DIRECTORY
+Create an opnotes file with: vim notes_<dd-mm-yy>
+Create a NSDB file with: vim NSDB_<dd-mm-yy>
+Script all target and scanning terminal windows with: script -af termscreen.$$
+Do NOT script your 'notes' or 'NSDB' terminal windows.
+Verify IPs with MC prior to mission start
+
+
+
+
 Enumeration
 -------------------------------------------------------------------------------------------------------------
 Hostname
@@ -276,4 +293,115 @@ wmic service where 'name like "%sql%"' get  name, startname
 
 nicely formatted as html table (and then opened in your browser):
 (wmic service where 'name like "%sql%"' get  name, startname /format:htable >out.html) && out.html
+
+
+
+
+
+After an Operation
+-----------------------------------------------------------------------------------------------------------------
+Below are the requirements of the Operator after completing or failing to complete an operation.
+
+All files collected, edited, used by student must be located in STUDENT DIRECTORY
+DEBRIEF reported to MC in DM
+See below for DEBRIEF Template
+cd out of the STUDENT DIRECTORY: cd ..
+Zip everything up: tar -cvf <studentdir>.tar <studentdir>
+Push tar to server: scp <studentdir>.tar student#@10.50.45.221:~
+Password: password#
+
+
+Debrief
+------------------------------------------------------------------------------------------------------------------
+Operator: <your name>
+Operation: <name of operation>
+MC: <name of MC>
+Analyst: <name of analyst>
+Description: <two-three sentence description of operation as well as one sentence summary per target.>
+
+EX)
+Operation: DryRun1
+Operator: SSG Brandee Lymon
+MC: MC2
+Analyst: Analyst2
+Description: Goal of operation was to collect email from EMAIL3. Mission was overall successful. Operator redirected through EXT_RTR to ADMIN1 to EMAIL3. Admin was logged into T2 running a security product. ClamAV was found on EMAIL3, MC provided guidance and email was collected.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
