@@ -1,0 +1,76 @@
+
+Abnormal Logging Report
+-------------------------------------------------------------------------------------------------------------------
+Looking for '@' symbol or remote logging
+
+Target: T2 // 192.168.0.27
+Name - rsyslog
+PID - 1764 
+PPID - 1
+User - rrot
+Location of Config file - /etc/rsyslog.conf & /etc/hosts
+Remotr IP (hostname if IP cannot be identified) - Louise (192.168.0.99)
+Network Connections - None observed
+Documentation- https://www.rsyslog.com/doc/index.html
+Description - remotely sending logs to 192.168.0.99
+Recommendatiom - Continue Mission. We have access to 192.168.0.99
+
+
+Recognize and respond to indicators of compromise (IOC)
+- Avoid leaving indicators of compromise such as any changes to a system, leaving files on disk behind or removing files without authorization
+- Identify and fully report possible malware to MC during the operation such as:
+  - Non-standard scripts running
+  - Actual malware to include rootkits
+- Identify and fully report abnormal/irregular logging to MC during the operation such as:
+  - Remote logging
+  - Process accounting
+  - Non-standard network monitoring software
+  - Anything else that could log actions on target
+Recognize and respond to events that change risk
+- Identify and fully report logged in users and their activities to MC during the operation.
+  - NOTE: You will ignore other students' activities.
+- Identifying and fully report Security Products installed on the device to MC during the operation such as:
+  - SELinux/AppArmor
+  - Anti-Virus Software
+  - Active firewall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
