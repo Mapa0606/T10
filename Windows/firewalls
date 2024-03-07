@@ -1,0 +1,38 @@
+Windows Firewall can be controlled/configured through a COM object-oriented API, scriptable through the netsh command
+
+
+netsh
+----------------------------------------------------------------------------------------------------------------------
+Syntax:
+
+netsh [-a AliasFile] [-c Context] [-r RemoteComputer]
+[{NetshCommand|-f ScriptFile}]
+
+Common Commands:
+
+netsh interface show interface - Display all network interfaces
+
+ip Commands:
+
+netsh interface ip show address - Display IP Address; DHCP;Subnet; Gateway
+netsh interface ip show dns - Display DNS information on network interface
+
+portproxy (Tunneling) Commands:
+
+netsh interface portproxy show all
+netsh interface portproxy add v4tov4 listenport=12345 listenaddress=127.0.0.1 connectport=54321 connectaddress=<Hop before's IP address> protocol=tcp
+netsh interface portproxy delete v4tov4 listenport=22 listenaddress=192.168.0.221
+
+
+netsh advfirewall firewall
+---------------------------------------------------------------------------------------------------------------------
+Common Commands:
+netsh advfirewall show allprofiles - See if Windows Firewall is enabled
+netsh advfirewall show currentprofile - Show which profiles are active
+netsh advfirewall export "c:\FW.wfw" - Create a BACKUP of the configuration
+netsh advfirewall import "c:\FW.wfw" - Restore netsh firewall configuration
+
+firewall Commands:
+netsh advfirewall firewall show rule name=all - View firewall configuration
+
+
