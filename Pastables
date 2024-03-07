@@ -11,15 +11,25 @@ partitions
 resource usage (memory, CPU, and storage space) of particular interest
 record all user accounts for use in follow-on operations
 
+Scanning
+------------------------------------------------------------------------------------------------------------------
+Ping Sweep
+for i in {1..254} ;do (ping -c 1 192.168.0.$i | grep "bytes from" &) ;done
+nmap
+ssh -S /tmp/T1 dummy -O forward -D 9050 <- set up dynamic socket to use proxychains
+proxychains nmap -Pn -n (-O for OS info) -vvv -T3 -sT -p T:22,111,22022,80,443,445,3389 <remote_ip>
+
+
 Collection
 -----------------------------------------------------------------------------------------------------------------
-scscp -P 2222 -r -o ControlPath=/tmp/T2 student15@127.0.0.1:/Windows/Prefetch /student15_05-03-24_HH08/prefetch_collectionp {source} {Destination}
+scp -P 3333 -r -o ControlPath=/tmp/T3 student15@127.0.0.1:/Windows/Prefetch /student15_06-03-24_HH09/T3_Collect/good_stuff p {source} {Destination}
 Upload:
 scp [/path/to/local/]<file> <user>@<remote_IP>:~/.
 Download
 scp <user>@<remote_ip>:[/path/to/remote]<file> [/path/to/local/file]
 ^ use -r for copying an entire directory
 scp -P <PORT#> -r -o ControlPath=</tmp/T2> student15@127.0.0.1:<REMOTE FILEPATH> <LOCAL FILEPATH>
+scp -P 31337 -T -r -o ControlPath=/tmp/T4 student15@127.0.0.1:'"C:/Program Files/Common Files/system/ado/*"' /student15_06-03-24_HH09/T4_Collect/
 
 ssh-cat
 Download
