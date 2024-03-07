@@ -12,7 +12,7 @@ Script all target and scanning terminal windows with: script -af termscreen.$$
 Do NOT script your 'notes' or 'NSDB' terminal windows.
 Verify IPs with MC prior to mission start
 
-
+tcpdump -x
 
 
 Enumeration
@@ -90,7 +90,7 @@ ls -latr ..
 ls -latr /
 sudo ls -latr /tmp
 sudo ls -latr /root
-sudo ls -latr ~/.bash_history
+sudo ls -latr /~/.bash_history
 #sudo cat /root/.bash_history
 #sudo cat ~/.bash_history
 *ls -latr /dev/shm
@@ -98,7 +98,7 @@ ls -latr /var/spool/cron
 ls -latr /var/*acc*
 ls -latr /var/*log*/
 sudo ls -latr /var/log/*
-#cat /var/log/* | grep [logged in user account]
+#sudo cat /var/log/* | grep [logged in user account]
 *ls -latr /var/log/audit/audit.log
 #read all the config files
 ls -la /etc/*syslog*
@@ -109,6 +109,7 @@ for user in $(cut -f1 -d: /etc/passwd); do echo "###### $user crontab is:"; cat 
 
 cat /etc/crontab
 ls -latr /var/spool/cron
+sudo ls -latr /var/spool/cron/crontabs
 #tail -n 1000 [files in /var/spool/cron/]
 ls -la /etc/cron.*
 #As needed, examine the files/scripts shown in the directory listing of the cron.* directories
