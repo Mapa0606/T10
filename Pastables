@@ -136,8 +136,9 @@ services --status-all || systemctl status --no-pager
 
 #/var/log/messages can log a find, usually from automount calls
 find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 since initial connection> -type f -print0 | xargs -0 ls -latr (NOTE there is a "-" a.k.a minus symbol preceding the "<duration since initial connection>"
+find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 -type f -print0 | xargs -0 ls -latr 
 #depending on permissions, running find can be nasty
-#find / -mmin -<TIME> 2>&1|egrep -v "^/proc/"|egrep -v "^/sys/"
+#sudo find / -mmin -30 2>&1|egrep -v "^/proc/"|egrep -v "^/sys/"
 
 
 #LINFO Linux Info Gathering
@@ -161,8 +162,8 @@ free -m
 dmidecode -t bios
 #ls -alR / (make sure scrollback limit is set to MAX on terminal)
 
-
-
+password15
+cd reptile
 
 
 #LINEXIT Linux Exit Survey
