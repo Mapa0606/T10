@@ -1,0 +1,27 @@
+Remote management
+----------------------------------------------------------------------------------------------------------------------
+- Uses port 5985 (HTTP) and 5986 (HTTPS).
+
+
+Evil-WinRm
+----------------------------------------------------------------------------------------------------------------------
+To install Evil Win-RM:
+Run all the below commands in powershell.
+
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+scoop --version
+
+scoop install ruby
+gem update --system
+gem install evil-winrm
+evil-winrm --version
+
+Commands to Use:
+Run with ssl: evil-winrm -i [IP address] -u [username] -p [password] -s
+
+Run powershell scripts: evil-winrm -i [IP address] -u [username] -p [password] -s -c "powershell.exe -ExecutionPolicy Bypass -File script.ps1"
+
+Upload & Download files:
+upload [local_path] [remote_path]
+download [remote_path] [local_path]
