@@ -198,7 +198,7 @@ sudo less /etc/rsyslog.d/00-my_iptables.conf
 date /t
 time /t
 tasklist /V
-
+query users
 #For suspicious process'# 
 wmic process get processid,parentprocessid,executablepath | findstr norton.exe
 
