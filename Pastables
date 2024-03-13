@@ -33,9 +33,8 @@ Scanning
 Ping Sweep
 for i in {1..254} ;do (ping -c 1 192.168.0.$i | grep "bytes from" &) ;done
 nmap
-ssh -S /tmp/T1 dummy -O forward -D 9050 <- set up dynamic socket to use proxychains
-proxychains nmap -Pn -n (-O for OS info) -vvv -T3 -sT -p T:22,111,22022,80,443,445,3389 <remote_ip>
-
+ssh -S /tmp/T2 dummy -O forward -D 9050 <- set up dynamic socket to use proxychains
+proxychains nmap -Pn -n -vvv -T3 -sT -p T:22000-22999 10.145.117.16
 
 Collection
 -----------------------------------------------------------------------------------------------------------------
@@ -50,7 +49,7 @@ scp -P 31337 -T -r -o ControlPath=/tmp/T4 student15@127.0.0.1:'"C:/Program Files
 
 ssh-cat
 Download
-ssh <user>@<Remote_IP> "cat <file>" > <file>
+ssh -S /tmp/T# dummy <user>@<Remote_IP> "cat <file>" > <file>
 Upload
 ssh <user>@<Remote_IP> "cat > <file>" < <file>
 
@@ -81,78 +80,46 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 ##LINVET Linux
 ------------------------------------------------------------------------------------------------------------
-w
-uname -a;id
-date;date -u
-pwd
-ls -latr
-ls -latr ..
 ls -latr /
-sudo ls -latr /tmp
-sudo ls -latr /root
-sudo ls -latr /~/.bash_history
-#sudo cat /root/.bash_history
-#sudo cat ~/.bash_history
-*ls -latr /dev/shm
-ls -latr /var/spool/cron
-ls -latr /var/*acc*
-ls -latr /var/*log*/
-sudo ls -latr /var/log/*
-#sudo cat /var/log/* | grep [logged in user account]
-*ls -latr /var/log/audit/audit.log
-#read all the config files
-ls -la /etc/*syslog*
-cat /etc/shadow
-cat /etc/passwd
-cut -f1 -d: /etc/passwd
-for user in $(cut -f1 -d: /etc/passwd); do echo "###### $user crontab is:"; cat /var/spool/cron/{crontabs/$user,$user} 2>/dev/null; done
-
-cat /etc/crontab
-ls -latr /var/spool/cron
-sudo ls -latr /var/spool/cron/crontabs
-#tail -n 1000 [files in /var/spool/cron/]
-ls -la /etc/cron.*
-#As needed, examine the files/scripts shown in the directory listing of the cron.* directories
-
-mount
-#mount | column -t
-df -h
-
-
-
-ifconfig -a; ip addr
+ls -latr /tmp
+ls -latr .
+ls -latr ..
+ls -latr /root
 ps -elf
-netstat -auntp
-
-
+ifconfig -a OR ip addr
+netstat -auntp OR ss -auntp
+w
+ls -latr /var/spool/cron
+tail -n 1000 <files in /var/spool/cron/>
+date; date -u
+uname -a
+df
+ls -latr /var/*/*acc*
+ls -latr /var/*log*/
+ls -latr /var/log/*
+cat out relevant files (grep for your logged in user account)
+ls -la /etc/*syslog* read all the config files
+for user in $(cut -f1 -d: /etc/passwd); do echo "###### $user crontab is:"; cat /var/spool/cron/{crontabs/$user,$user} 2>/dev/null; done
+cat /etc/crontab
+ls -la /etc/cron.*
+As needed, examine the files/scripts shown in the directory listing of the cron.* directories
+find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -<duration in minutes since initial connection> -type f -print0 | xargs -0 ls -latr (NOTE there is a "-" a.k.a minus symbol preceding the "<duration in minutes since initial connection">
 sestatus OR getenforce
-
-
-ls -latr /etc/*release*
-cat /etc/*release*
-cat /proc/cpuinfo
-#(depending on systemd vs not systemd)
-services --status-all || systemctl status --no-pager
-
-#/var/log/messages can log a find, usually from automount calls
-find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 since initial connection> -type f -print0 | xargs -0 ls -latr (NOTE there is a "-" a.k.a minus symbol preceding the "<duration since initial connection>"
-find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 -type f -print0 | xargs -0 ls -latr 
-#depending on permissions, running find can be nasty
-#sudo find / -mmin -30 2>&1|egrep -v "^/proc/"|egrep -v "^/sys/"
-
+cat /root/.bash_history
+cat ~/.bash_history
 
 #LINFO Linux Info Gathering
 ------------------------------------------------------------------------------------------------------------------
-#mount
+mount
 lsmod
-#uname -a
-#ls -latr /etc/*release*
-#cat /etc/*release*
+uname -a
+ls -latr /etc/*release*
+cat /etc/*release*
 cat /proc/cpuinfo
-#services --status-all || systemctl status --no-pager (depending on systemd vs not systemd)
+services --status-all || systemctl status --no-pager (depending on systemd vs not systemd)
 cat /proc/meminfo
-#cat /etc/shadow
-#cat /etc/passwd
+cat /etc/shadow
+cat /etc/passwd
 lspci -vv
 arp -a
 lsusb
@@ -160,36 +127,18 @@ lsblk
 fdisk -l
 free -m
 dmidecode -t bios
-#ls -alR / (make sure scrollback limit is set to MAX on terminal)
 
-password15
-cd reptile
 
 
 #LINEXIT Linux Exit Survey
 ------------------------------------------------------------------------------------------------------------------
+
+w
 ls -latr /tmp
 ps -elf
 netstat -lptn
 ls -latr /var/log
-w
-
-#/var/log/messages can log a find, usually from automount calls
-find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -&lt;yourminutesontarget&gt; -
-#depending on permissions, running find can be nasty
-#find / -mmin -<TIME> 2>&1|egrep -v "^/proc/"|egrep -v "^/sys/"
-type f -print0 | xargs -0 ls -latr
-
-
-
-
-sudo less /etc/rsyslog.d/00-my_iptables.conf
-
-
-
-
-
-
+find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -60 -type f -print0 | xargs -0 ls -latr
 
 
 
@@ -203,7 +152,7 @@ query users
 wmic process get processid,parentprocessid,executablepath | findstr norton.exe
 
 #To hash a file on windows#
-certutil -hashfile "c:\example\test_file.txt" SHA256
+certutil -hashfile "c:\Users\Administrator\Desktop\thesecredsshouldwork.config" MD5
 
 
 auditpol /get /category:*
