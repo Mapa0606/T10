@@ -1,1 +1,23 @@
-sudo cat /etc/cron.d/clamav-update
+sudo cat /etc/cron.d/clamav
+grep .ssh
+
+
+ls -latr /home
+sudo cat /etc/shadow
+
+sudo md5sum /etc/shadow
+
+ls -latr
+cd /home/useraccounts/student15
+grep -r "*rdp*
+sudo find / -name "*rdp*" 2>/dev/null
+
+"*rdp*"
+sudo cat /sys/devices/cpu/rdpmc
+sudo find / -xdev -type f -print0 | xargs -0 grep -H "*rdp*" 2>/dev/n
+
+find / -name "*tcpdump*" 2>/dev/null
+
+md5sum /var/*log*/tcpdump.pcap
+
+file /var/log/tcpdump.pcap
