@@ -21,8 +21,7 @@ portproxy (Tunneling) Commands:
 
 netsh interface portproxy show all
 netsh interface portproxy add v4tov4 listenport=12345 listenaddress=127.0.0.1 connectport=54321 connectaddress=<Hop before's IP address> protocol=tcp
-netsh interface portproxy delete v4tov4 listenport=22 listenaddress=192.168.0.221
-
+netsh interface portproxy add v4tov4 listenport=31015 listenaddress=127.0.0.1 connectport=22012 connectaddress=10.50.30.202 protocol=tcp
 
 netsh advfirewall firewall
 ---------------------------------------------------------------------------------------------------------------------
