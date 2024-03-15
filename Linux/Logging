@@ -24,8 +24,18 @@ xferlog
 /var/log/secure /var/log/auth.log
     • Messages generated from the syslog facilitythat require extra privacy
 Cleaning Logs
-    • Find your logs: find /var/log -type f -mmin -120 2&> /dev/null
-      -secure-
+
+sudo find / -newermt "2024-03-13 12:00:00" ! -newermt "2024-03-13 21:00:00" | grep log
+
+
+    • Find your logs: 
+
+find /var/log -type f -newermt "2024-03-13 12:00:00" || ! -newermt "2024-03-13 21:00:00" 2&> /dev/null
+sudo cat /var/log/secure
+grep -E 'student15 .* Mar 13' /var/log/secure
+
+awk -vDate=`date -dwednesday '12:00' +[%d/%b/%Y:%H:%M:%S` -vDate2=`date -dwednesay '21:00' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date && $4 < Date2) print $0}' /var/log/secure
+    -secure-
         ◦ grep -v ‘sshd\[1369\]’ /var/log/secure > /tmp/secure.clean
         ◦ grep through cleaned LOG to make sure
         ◦ cat /tmp/secure.clean > /var/log/secure
@@ -40,6 +50,7 @@ Cleaning Logs
         ◦ rm -rf /tmp/cron
           
           Cleaning Logs - Specific Logs
+   
     • -audit.log-
         ◦ service auditd stop
         ◦ grep -n ‘192.0.2.80’ /var/log/audit/audit.log (IP address,PID,time)
