@@ -1,9 +1,13 @@
 sudo cat /etc/cron.d/clamav
 grep .ssh
 
+password15
 
-ls -latr /home
-sudo cat /etc/shadow
+file /bin/centOS.rtr.updtr
+sudo cat /usr/sbin/rsyslogd
+
+sudo ls -latr /tmp/ssh-QAMiTiPIPYvs
+sudo cat /tmp/ssh-QAMiTiPIPYvs/agent.21614
 
 sudo md5sum /etc/shadow
 
@@ -18,6 +22,22 @@ sudo find / -xdev -type f -print0 | xargs -0 grep -H "*rdp*" 2>/dev/n
 
 find / -name "*tcpdump*" 2>/dev/null
 
-md5sum /var/*log*/tcpdump.pcap
+sudo md5sum /maytheforcebewithyou.txt
+
 
 file /var/log/tcpdump.pcap
+ exit
+student15@dryruns-targeta:~$ sudo find / -type f -name "*.txt" 
+
+sudo cat /etc/file4.txt
+sudo cat /root/file2.txt
+sudo cat .sudo_as_admin_successful
+sudo ls -latr /var/spool/cron/atjobs
+sudo tail -n 1000 /var/spool/cron/atjobs/.SEQ
+
+hklm\SOFTWARE\AVAST Software\Avast\properties
+
+
+type c:\windows\changelog.txt                              
+
+
