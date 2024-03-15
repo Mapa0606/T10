@@ -14,6 +14,17 @@ Verify IPs with MC prior to mission start
 
 tcpdump -x
 
+Netsh
+----------------------------------------------------------------------------------------------------------------
+netsh interface portproxy show all
+netsh interface portproxy add v4tov4 listenport=12345 listenaddress=127.0.0.1 connectport=54321 connectaddress=<Hop before's IP address> protocol=tcp
+
+
+Ex)
+netsh interface portproxy add v4tov4 listenport=31015 listenaddress=10.145.117.10 connectport=22012 connectaddress=10.145.117.16 protocol=tcp
+ssh -S /tmp/T1 -O forward -L127.0.0.1:3333:10.145.117.10:31015 dummy
+ssh -MS /tmp/T3 -p 3333 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  student15@127.0.0.1
+
 
 Enumeration
 -------------------------------------------------------------------------------------------------------------
@@ -49,7 +60,7 @@ scp -P 31337 -T -r -o ControlPath=/tmp/T4 student15@127.0.0.1:'"C:/Program Files
 
 ssh-cat
 Download
-ssh -S /tmp/T# dummy <user>@<Remote_IP> "cat <file>" > <file>
+ssh -S /tmp/T5 dummy "sudo cat /etc/file4.txt" > /student15_14-03-24_DR04/Files_192.169.117.201/file4.txt
 Upload
 ssh <user>@<Remote_IP> "cat > <file>" < <file>
 
@@ -59,12 +70,17 @@ SSH
 ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@10.50.35.49
 ssh -s  /tmp/T1 -O forward -L127..0.0.1:37954:192.168.0.10:22 dummy 
 
+Evil-winrm
+---------------------------------------------------------------------------------------------------------------
+ssh -S /tmp/T1 -O forward -L2222:10.145.117.10:5985 dummy
+evil-winrm -i 127.0.0.1 -u student15 -P 2222
+
 IpTables
 -------------------------------------------------------------------------------------------------------------
 lsmod
 sudo iptables -L
 sudo iptables -t nat -nvL
-sudo iptables -t nat -A PREROUTING -p tcp --dport <RHP> -j DNAT --to-destination <IP1>:<SSHPORT>
+sudo iptables -t nat -A PREROUTING -p tcp --dport 22815 -j DNAT --to-destination 192.169.117.202:22013
 sudo iptables -t nat -A POSTROUTING -p tcp -d <IP1> <RHP> -j SNAT --to-source <IP2>
 
 iptables -t nat -A POSTROUTING -p tcp  -j MASQUERADE (SLEDGEHAMMER)
@@ -84,28 +100,30 @@ ls -latr /
 ls -latr /tmp
 ls -latr .
 ls -latr ..
-ls -latr /root
-ps -elf
-ifconfig -a OR ip addr
-netstat -auntp OR ss -auntp
+sudo ls -latr /proc
+sudo ls -latr /root*
+sudo ps -elf
+ifconfig -a ; ip addr
+sudo netstat -auntp ; ss -auntp
 w
-ls -latr /var/spool/cron
+sudo ls -latr /var/spool/cron
 tail -n 1000 <files in /var/spool/cron/>
 date; date -u
 uname -a
 df
 ls -latr /var/*/*acc*
 ls -latr /var/*log*/
-ls -latr /var/log/*
+sudo ls -latr /var/log/*
+sudo cat /etc/rsyslog.conf
 cat out relevant files (grep for your logged in user account)
 ls -la /etc/*syslog* read all the config files
 for user in $(cut -f1 -d: /etc/passwd); do echo "###### $user crontab is:"; cat /var/spool/cron/{crontabs/$user,$user} 2>/dev/null; done
 cat /etc/crontab
 ls -la /etc/cron.*
+sestatus
 As needed, examine the files/scripts shown in the directory listing of the cron.* directories
-find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -<duration in minutes since initial connection> -type f -print0 | xargs -0 ls -latr (NOTE there is a "-" a.k.a minus symbol preceding the "<duration in minutes since initial connection">
-sestatus OR getenforce
-cat /root/.bash_history
+find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -30 -type f -print0 | xargs -0 ls -latr 
+sudo cat /root/.bash_history
 cat ~/.bash_history
 
 #LINFO Linux Info Gathering
@@ -118,15 +136,15 @@ cat /etc/*release*
 cat /proc/cpuinfo
 services --status-all || systemctl status --no-pager (depending on systemd vs not systemd)
 cat /proc/meminfo
-cat /etc/shadow
+sudo cat /etc/shadow
 cat /etc/passwd
 lspci -vv
 arp -a
 lsusb
 lsblk
-fdisk -l
+sudo fdisk -l
 free -m
-dmidecode -t bios
+sudo dmidecode -t bios
 
 
 
@@ -136,7 +154,7 @@ dmidecode -t bios
 w
 ls -latr /tmp
 ps -elf
-netstat -lptn
+sudo netstat -lptn
 ls -latr /var/log
 find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -60 -type f -print0 | xargs -0 ls -latr
 
@@ -147,12 +165,13 @@ find / \( -path /proc -prune -o -path /sys -prune \) -o -mmin -60 -type f -print
 date /t
 time /t
 tasklist /V
-query users
+query user
+query session
 #For suspicious process'# 
-wmic process get processid,parentprocessid,executablepath | findstr norton.exe
+wmic process get processid,parentprocessid,executablepath | findstr LogFusion.exe
 
 #To hash a file on windows#
-certutil -hashfile "c:\Users\Administrator\Desktop\thesecredsshouldwork.config" MD5
+certutil -hashfile "c:\windows\explorer.exe" MD5
 
 
 auditpol /get /category:*
