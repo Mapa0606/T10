@@ -40,7 +40,6 @@ X-----------------------
 ssh -S /tmp/T1 -O forward -L2222:192.168.0.10:22 dummy
 ssh -MS /tmp/T2 -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
 
-2024-02-27 15:23:21
 
 
 
@@ -77,7 +76,6 @@ ssh -S /tmp/T3 -O forward -L127.0.0.1:44044:192.168.0.13:22 dummy
 ssh -MS /tmp/T4 -p 44044 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
 
 
-2024-02-27 15:46:19-- exit 
 
 
 
@@ -94,7 +92,6 @@ ssh -S /tmp/T4 -O forward -L127.0.0.1:5555:192.168.0.27:22 dummy
 ssh -MS /tmp/T5 -p 5555 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
 
 
-2024-02-27 15:46:19-- exit 
 
 
 
