@@ -21,7 +21,12 @@ portproxy (Tunneling) Commands:
 
 netsh interface portproxy show all
 netsh interface portproxy add v4tov4 listenport=12345 listenaddress=127.0.0.1 connectport=54321 connectaddress=<Hop before's IP address> protocol=tcp
-netsh interface portproxy add v4tov4 listenport=31015 listenaddress=127.0.0.1 connectport=22012 connectaddress=10.50.30.202 protocol=tcp
+
+
+Ex)
+netsh interface portproxy add v4tov4 listenport=31015 listenaddress=10.145.117.10 connectport=22012 connectaddress=10.145.117.16 protocol=tcp
+ssh -S /tmp/T1 -O forward -L127.0.0.1:3333:10.145.117.10:31015 dummy
+ssh -MS /tmp/T3 -p 3333 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  student15@127.0.0.1
 
 netsh advfirewall firewall
 ---------------------------------------------------------------------------------------------------------------------
