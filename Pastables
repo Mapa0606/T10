@@ -42,7 +42,7 @@ record all user accounts for use in follow-on operations
 Scanning
 ------------------------------------------------------------------------------------------------------------------
 Ping Sweep
-for i in {1..254} ;do (ping -c 1 192.168.0.$i | grep "bytes from" &) ;done
+for i in {128..254} ;do (ping -c 1 10.20.169.$i | grep "bytes from" &) ;done
 nmap
 ssh -S /tmp/T2 dummy -O forward -D 9050 <- set up dynamic socket to use proxychains
 proxychains nmap -Pn -n -vvv -T3 -sT -p T:22000-22999 10.145.117.16
