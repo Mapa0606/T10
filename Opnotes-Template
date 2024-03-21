@@ -1,28 +1,99 @@
-Op: 
-Date:  
-Start Time:
-End time: 
+Op: AA03
+Date: 20-03-24
+Start Time: 0900
+End time: 1500
 
 ------------------------
 SOM
 ------------------------
-
-
+>T1: 10.50.24.19
+->T2: 10.20.169.122
+-->T3: 10.20.169.238
+---> T4: 192.168.169.43
+----< T5: 192.168.169.111
+-----> T6: 192.168.169.122
+----> T7: 192.168.169.113
 ------------------------
 Creds
 ------------------------
-student15
-password15
+engineer#::enshallah // caisson#::tread_depth // NOC_Admin#::5gftE8DCc8 // user#::P455w0rd 
 
 
 
 =========================
-T1: 10.50.30.49
+T1: 10.50.24.19
 =========================
 X-----------------------
 
-ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@10.50.30.49
+ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 10123 engineer15@10.50.24.19
 
+enshallah
+
+
+
+
+
+
+------------------------X
+=========================
+
+=========================
+T2: 10.20.169.122
+=========================
+X-----------------------
+ssh -S /tmp/T1 -O forward -L2222:10.20.169.122:52203 dummy
+ssh -MS /tmp/T2 -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null caisson15@127.0.0.1
+
+tread_depth
+
+
+
+
+
+
+------------------------X
+=========================
+
+=========================
+T3: 10.20.169.238
+=========================
+X-----------------------
+
+ssh -S /tmp/T2 -O forward -L127.0.0.1:3333:10.20.169.238:52230 dummy
+ssh -MS /tmp/T3 -p 3333 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null NOC_Admin15@127.0.0.1
+
+5gftE8DCc8
+
+
+
+
+
+
+------------------------X
+=========================
+
+=========================
+T4: 192.168.169.43
+=========================
+X-----------------------
+ssh -S /tmp/T3 -O forward -L127.0.0.1:4444:192.168.169.43:33125 dummy
+ssh -MS /tmp/T4 -p 4444 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user15@127.0.0.1
+
+P455w0rd
+
+
+
+
+
+------------------------X
+=========================
+
+=========================
+T5: 192.168.169.111 <- Reverse callback
+=========================
+X-----------------------
+ssh -S /tmp/T4 -O reverse -L127.0.0.1:5555:UNK:UNK dummy
+ssh -MS /tmp/T5 -p 5555 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null UNK@127.0.0.1
 
 
 
@@ -34,12 +105,11 @@ ssh -MS /tmp/T1 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null stud
 =========================
 
 =========================
-T2: 192.168.0.10
+T6: 192.168.169.122
 =========================
 X-----------------------
-ssh -S /tmp/T1 -O forward -L2222:192.168.0.10:22 dummy
-ssh -MS /tmp/T2 -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
-
+ssh -S /tmp/T4 -O forward -L127.0.0.1:5555:UNK:UNK dummy
+ssh -MS /tmp/T5 -p 5555 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null UNK@127.0.0.1
 
 
 
@@ -49,15 +119,12 @@ ssh -MS /tmp/T2 -p 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/n
 
 ------------------------X
 =========================
-
 =========================
-T3: 192.168.0.27
+T7: 192.168.169.113 <- from T4
 =========================
 X-----------------------
-
-ssh -S /tmp/T2 -O forward -L127.0.0.1:3333:192.168.0.27:22 dummy
-ssh -MS /tmp/T3 -p 3333 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
-
+ssh -S /tmp/T4 -O forward -L127.0.0.1:5555:UNK:UNK dummy
+ssh -MS /tmp/T5 -p 5555 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null UNK@127.0.0.1
 
 
 
@@ -67,36 +134,3 @@ ssh -MS /tmp/T3 -p 3333 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/n
 
 ------------------------X
 =========================
-
-=========================
-T4: 192.168.0.23
-=========================
-X-----------------------
-ssh -S /tmp/T3 -O forward -L127.0.0.1:44044:192.168.0.13:22 dummy
-ssh -MS /tmp/T4 -p 44044 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
-
-
-
-
-
-
-
-------------------------X
-=========================
-
-=========================
-T5: 192.168.0.27
-=========================
-X-----------------------
-ssh -S /tmp/T4 -O forward -L127.0.0.1:5555:192.168.0.27:22 dummy
-ssh -MS /tmp/T5 -p 5555 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null student15@127.0.0.1
-
-
-
-
-
-
-
-------------------------X
-=========================
-
