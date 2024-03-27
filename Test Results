@@ -24,3 +24,16 @@ Missed analyst task
 -survey file not named correctly
 -tarball contained swp files
 -missing log updates in opnotes
+
+
+
+Missed nonstandard: Malware
+Missing target termscreen
+
+POINT DEDUCTIONS ###
+
+Missing timestamps in opnotes
+Missing vetting commands
+Security product report in NSDB entries missing information (MC report only)
+Missed analyst notification
+Malware, abnormal logging reports missing key details
