@@ -86,7 +86,7 @@ ssh -M -S /tmp/T4 -p 4444 student@127.0.0.1
 
 REVERSE TUNNELING
 SSH command: 
-ssh -S /tmp/T4 -p 4444 student@127.0.0.1 -O forward -R192.168.0.4:12345:127.0.0.1:5555
+ssh -S /tmp/T1.15 -p 1111 student15@127.0.0.1 -O forward -R:15229:127.0.0.1:22
     1. Calls ssh command binary to execute on the current host
     2. Multiplex Information - -S accesses the stored socket when we connected to T4. 
 Present Connection 
@@ -112,7 +112,7 @@ Future Connection
 
 NETCAT
 nc will accept connections at a given port (-p) and act as a server when you execute it with the -l (listen) option:
-nc -l -p 1234
+ncat -nvlop 8015
 In another terminal window, connect a client to the server with nc:
 nc 127.0.01 1234
 You can now send messages between the two machines with nc.
